@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* selector "::"*/
+    /* 첫 번째 글자의 color와 font 사이즈 */
+    /* text에 적용할 수 있는 css 속성 모두 사용가능 */
+    /* first-letter가 우선순위가 높음 */
+    p::first-letter {
+        color: #ff0000;
+        font-size: xx-large;
+    }
+    /* 첫 번째 줄에 대한 color와 font사이즈*/
+    /* 창 크기가 변해도 첫 번째 줄에만 */
+    p::first-line {
+        color: #0000ff;
+        font-variant: small-caps;
+    }
+    /* 해당 text를 긁었을 때 */
+    p::selection{
+        background-color: black ;
+        color: white;
+    }
+</style>
+</head>
+<body>
+    <p>You can combine the ::first-letter and ::first-line pseudo-elements to add a special effect to the first letter and the first line of a text!</p>
+</body>
+</html>
