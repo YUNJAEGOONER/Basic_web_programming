@@ -1,0 +1,27 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+      <style> 
+            div ~ p { background-color: yellow; }
+            /* 뒤에 등장하는 모든 sibling p 에 해당 속성 적용 */
+      </style> 
+</head> 
+<body> 
+      <h2>Adjacent Sibling Selector </h2> 
+      <div> 
+            <p>Paragraph 1 in the div.</p> 
+      </div> 
+      <!-- general sibling -->
+      <p>Paragraph 2. After a div.</p> 
+      
+      <div> 
+            <p>Paragraph 3 in the div.</p> 
+      </div> 
+      
+      <!-- general sibling -->
+      <p>Paragraph 4. After a div.</p>
+      <!-- general sibling -->
+      <p>Paragraph 5. After a div.</p> 
+      
+</body> 
+</html>
