@@ -34,26 +34,27 @@
 
 1. 포스터 클릭 시, 영화 정보 제공 사이트로 이동
 
- |          |          |
+|          |          |
 |----------|----------|
 | ![이미지1](https://github.com/user-attachments/assets/61f585a1-c3f2-4f51-9959-11c744cb3ede) | ![이미지2](https://github.com/user-attachments/assets/b4fa2f49-6ec4-437d-96c7-ac6cee7ab412) |  
 
 2. 영화 검색
 
 
- |          |          |
+|          |          |
 |----------|----------|
 | ![이미지1](https://github.com/user-attachments/assets/12a8a7cc-6e14-459a-ac7e-e4e66da0a77a) | ![이미지2](https://github.com/user-attachments/assets/3092971f-9101-4086-8f5e-0286cea6d746) |  
 
 3. 영화 리뷰 검색 (최신순, 정확도순으로 검색 가능)
 
-   
+|          |          |
+|----------|----------|
+| ![이미지1](https://github.com/user-attachments/assets/82940d77-1e84-4269-b712-145063a9ccfa) | ![이미지2](https://github.com/user-attachments/assets/41aa481a-e1f4-4e00-baaf-507052300fae) | 
 
 4. 영화관 검색 (마커로 검색 결과를 표시하고 해당 장소명이 표시)
 
-
-
-
-
+|          |          |
+|----------|----------|
+| ![이미지1](https://github.com/user-attachments/assets/45b78873-3ef2-46f5-b4ea-47c960ac5f44) | ![이미지2](https://github.com/user-attachments/assets/a622533e-b914-4b06-985a-06d807f73da7) |
 
 
