@@ -1,0 +1,161 @@
+<html lang="en">
+
+<style>
+    #result {
+        border-style: solid;
+        border-color: #949497;
+        margin: 10px;
+        padding: 10px;
+        overflow: auto;
+    }
+
+    #content {
+        overflow: auto;
+    }
+
+    #poster {
+        float: right;
+    }
+
+    /* Pseudo element */
+    div::first-line {
+        font-weight: bold;
+    }
+</style>
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파인드어무비</title>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+
+<header>
+    <a href="main.html" id="site_title">파인드 어 무비</a>
+</header>
+
+<script>
+    function search() {
+        if (my_form.txt.value == "") {
+            alert("영화 제목을 입력하세요");
+            my_form.txt.focus();
+        }
+        else {
+            var search = my_form.txt.value;
+
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState == 4) {
+                    // responseText : 서버에서 넘어온 결과 텍스트 전체
+                    // console.log(this.responseText);
+                    //responseText를 컨트롤해서 원하는 데이터만을 출력하자
+                    // var result = this.responseText;
+                    var myJson = JSON.parse(this.response);
+                    // document.getElementById("demo").innerHTML = myJson.Data[0].Result[0].plots.plot[0].plotText;
+                    if (myJson.TotalCount == "0") {
+                        document.getElementById("demo").innerHTML = search + " 검색결과가 없습니다."
+                    }
+                    else {
+                        var str = ""
+                        for (var i = 0; i < parseInt(myJson.TotalCount); i++) {
+                            var title = myJson.Data[0].Result[i].title;
+                            title = title.replace(/\!HS/g, " ");
+                            title = title.replace(/\!HE/g, " ")
+                            title = title.replace(/^\s+|\s+$/g, "");
+                            title = title.replace(/ +/g, " ");
+
+                            var date = "개봉 : " + myJson.Data[0].Result[i].repRlsDate;
+                            var grade = "등급 : " + myJson.Data[0].Result[i].ratings.rating[0].ratingGrade
+                            var genre = "개요 : " + myJson.Data[0].Result[i].genre;
+                            var plot = "소개 : " + myJson.Data[0].Result[i].plots.plot[0].plotText;
+                            var director = "감독 : " + myJson.Data[0].Result[i].directors.director[0].directorNm;
+
+                            var actor = ""
+                            for (var j = 0; j < myJson.Data[0].Result[i].actors.actor.length - 1; j++) {
+                                actor = actor + myJson.Data[0].Result[i].actors.actor[j].actorNm + ", ";
+                            }
+                            actor = actor + myJson.Data[0].Result[i].actors.actor[myJson.Data[0].Result[i].actors.actor.length - 1].actorNm;
+                            actor = "출연 : " + actor;
+
+                            var poster = myJson.Data[0].Result[i].posters;
+                            var image = ""
+                            for (var k = 0; k < poster.length; k++) {
+                                if (poster[k] == "|") {
+                                    break;
+                                }
+                                else {
+                                    image = image + poster[k]
+                                }
+                            }
+                            str = str + '<div id = "result"><div id = poster><img src =" ' + image + '"></div><div id = "content"><p>' + title + '<br>' + grade + '<br>'
+                                + date + '<br>' + genre + '<br>' + plot + '<br>' + director + '<br>' + actor + '<br>' + '</p></div></div>';
+
+                        }
+                        document.getElementById("demo").innerHTML = str;
+                    }
+                }
+            });
+            //("GET" 방식, 요청보내는 URL)
+            // document.getElementsByClassName("my_footer")[0].style.position = "relative";
+            xhr.open("GET", "http://localhost:3000/api?word=" + encodeURI(search));
+            xhr.send();
+        }
+    }
+
+</script>
+
+<body>
+    <div id="whole">
+        <div id="navigator">
+            <nav>
+                <ul>
+                    <li><a href="main.html">🏠Home</a></li>
+                    <li><a href="movie.html">🎥영화 검색</a></li>
+                    <li><a href="review.html">👍영화 리뷰 검색</a></li>
+                    <li><a href="theater.html">🎞️영화관 검색</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="main">
+
+            <form name="my_form">
+                <div id="movie">
+                    <!-- <h1 id = main_title>서치 어 무비</h1> -->
+                    <div id='search_box'>
+                        <table width=80% align="center" border="0">
+                            <tr>
+                                <td>
+                                    <input type="text" name="txt" id="search_txt" placeholder="영화제목을 입력해주세요">
+                                </td>
+                                <td>
+                                    <input type="button" id="search_button" value="🔍" onclick="search()">
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- <input type="text" name="txt" id="search_txt" placeholder="영화제목을 입력해주세요">
+                        <input type="button" id="search_button" value="🔍" onclick="search()"> -->
+                        <!-- <button id="search_button" onclick="search()"></button> -->
+                    </div>
+                </div>
+                <div id="search_result"></div>
+            </form>
+        </div>
+        <p id="demo"></p>
+
+        <footer class="my_footer">
+            <ul>
+                <li>🧑🏻‍💻Developed by : YunJae LEE (PNU CSE)</li>
+                <li>✉️Contact me : gooneryj1917@pusan.ac.kr</li>
+            </ul>
+        </footer>
+    </div>
+
+</body>
+
+
+
+</html>

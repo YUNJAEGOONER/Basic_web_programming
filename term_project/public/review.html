@@ -1,0 +1,172 @@
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파인드어무비</title>
+    <link rel="stylesheet" href="mycss.css">
+</head>
+
+<style>
+    #result {
+        border-style: solid;
+        margin: 10px;
+        padding: 10px;
+        border-color: #949497;
+    }
+
+    /* Pseudo element */
+    div::first-line {
+        color: red;
+        font-weight: bold;
+    }
+</style>
+
+<header>
+    <a href="main.html" id="site_title">파인드 어 무비</a>
+</header>
+
+<script>
+    function accuracy() {
+        var search = "영화" + my_form.txt.value + "리뷰";
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState == 4) {
+                // responseText : 서버에서 넘어온 결과 텍스트 전체
+                // console.log(this.responseText);
+                //responseText를 컨트롤해서 원하는 데이터만을 출력하자
+                // var result = this.responseText;
+                var myJson = JSON.parse(this.response);
+                str = " ";
+                for (var i = 0; i < 10; i++) {
+                    str = str + '<div id = "result">' + "제목 : " + myJson.documents[i].title + '<br>'
+                        + "블로그 명 : " + myJson.documents[i].blogname + '<br>'
+                        + "글 요약 : " + myJson.documents[i].contents
+                        + '<br>' + '<a href="' + myJson.documents[i].url + '" target = _blank >블로그 바로가기</a>' + "</div>";
+                }
+                document.getElementById("demo").innerHTML = str;
+                //document.getElementById("demo").innerHTML = this.responseText;
+                // + '<a href="'
+                // str = str +'<div id = "result">' + myJson.documents[i].blogname 
+                //         + '<br>'+ myJson.documents[i].title + '<br>' + myJson.documents[i].contents 
+                //         + '<br>'  +  myJson.documents[i].url+ "</div>";
+
+
+            }
+        });
+        //("GET" 방식, 요청보내는 URL)
+        xhr.open("GET", "http://localhost:3000/kakao?word=" + encodeURI(search));
+        xhr.send();
+    }
+
+    function recency() {
+        var search = "영화" + my_form.txt.value + "리뷰";
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+        xhr.addEventListener("readystatechange", function () {
+            if (this.readyState == 4) {
+                // responseText : 서버에서 넘어온 결과 텍스트 전체
+                // console.log(this.responseText);
+                //responseText를 컨트롤해서 원하는 데이터만을 출력하자
+                // var result = this.responseText;
+                var myJson = JSON.parse(this.response);
+                str = " ";
+                for (var i = 0; i < 10; i++) {
+                    str = str + '<div id = "result">' + "제목 : " + myJson.documents[i].title + '<br>'
+                        + "블로그 명 : " + myJson.documents[i].blogname + '<br>'
+                        + "글 요약 : " + myJson.documents[i].contents
+                        + '<br>' + '<a href="' + myJson.documents[i].url + '" target = _blank >블로그 바로가기</a>' + "</div>";
+                }
+                document.getElementById("demo").innerHTML = str;
+                //document.getElementById("demo").innerHTML = this.responseText;
+                // + '<a href="'
+                // str = str +'<div id = "result">' + myJson.documents[i].blogname 
+                //         + '<br>'+ myJson.documents[i].title + '<br>' + myJson.documents[i].contents 
+                //         + '<br>'  +  myJson.documents[i].url+ "</div>";
+            }
+        });
+        //("GET" 방식, 요청보내는 URL)
+        xhr.open("GET", "http://localhost:3000/kakaorecency?word=" + encodeURI(search));
+        xhr.send();
+    }
+
+    function search() {
+        if (my_form.txt.value == "") {
+            alert("영화 제목을 입력하세요");
+            my_form.txt.focus();
+        }
+        else {
+            if (my_form.selection.value == "accuracy") {
+                accuracy();
+            }
+            else {
+                recency();
+            }
+        }
+    }
+</script>
+
+<body>
+    <div id="whole">
+        <div id="navigator">
+            <nav>
+                <ul>
+                    <li><a href="main.html">🏠Home</a></li>
+                    <li><a href="movie.html">🎥영화 검색</a></li>
+                    <li><a href="review.html">👍영화 리뷰 검색</a></li>
+                    <li><a href="theater.html">🎞️영화관 검색</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="main">
+
+            <form name="my_form">
+                <div id="theater">
+                    <!-- <h1 id = main_title>서치 어 무비 리뷰</h1> -->
+                    <div id='search_box'>
+                        <table width=80% align="center" border="0" id=my_table>
+                            <tr>
+                                <td>
+                                    <select id="selection" name="selection">
+                                        <option value="accuracy">정확도순</option>
+                                        <option value="recency">최신순</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="txt" id="search_txt" placeholder="영화제목을 입력해주세요">
+                                </td>
+                                <td>
+                                    <input type="button" id="search_button" value="🔍" onclick="search()">
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- <select id="selection" name="selection">
+                            <option value="accuracy">정확도순</option>
+                            <option value="recency">최신순</option>
+                        </select>
+                        <input type="text" name="txt" id="search_txt" placeholder="영화제목을 입력해주세요(리뷰검색)">
+                        <input type="button" id="search_button" value="🔍" onclick="search()"> -->
+                    </div>
+                </div>
+                <div id="search_result"></div>
+            </form>
+        </div>
+        <p id="demo"></p>
+
+
+
+        <footer class="my_footer">
+            <ul>
+                <li>🧑🏻‍💻Developed by : YunJae LEE (PNU CSE)</li>
+                <li>✉️Contact me : gooneryj1917@pusan.ac.kr</li>
+            </ul>
+        </footer>
+    </div>
+</body>
+
+
+</html>
